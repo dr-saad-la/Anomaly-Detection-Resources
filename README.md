@@ -73,10 +73,10 @@ This section contains:
 
 This section contains the available in Julia libraries for anomaly detection: 
 
-1. [AnomalyDetection.jl](https://github.com/sglyon/AnomalyDetection.jl)
+1. [AnomalyDetection.jl](https://github.com/smidl/AnomalyDetection.jl)
 It provides tools for detecting anomalies in time-series data. It includes both univariate and multivariate anomaly detection methods.
 
-2. [OutlierDetection.jl](https://github.com/diarguda/OutlierDetection.jl)
+2. [OutlierDetection.jl](https://github.com/OutlierDetectionJL/OutlierDetection.jl)
 This offers a collection of outlier detection methods for both univariate and multivariate data. It includes techniques such as the Isolation Forest, One-Class SVM, and Local Outlier Factor (LOF).
 
 3. [KNNAnomaly.jl](https://github.com/zgornel/KNNAnomaly.jl)
@@ -95,7 +95,7 @@ This package is designed for detecting changes and anomalies in time-series data
 While primarily a library for energy-based models, Boltzmann.jl can also be used for anomaly detection tasks by modeling the probability distribution of normal data and identifying deviations from it.
 
 8. [HDBSCAN.jl](https://github.com/baggepinnen/HDBSCAN.jl)
-HDBSCAN (Hierarchical Density-Based Spatial Clustering of Applications with Noise) is primarily a clustering algorithm, but it can also be used for anomaly detection by identifying points that do not belong to any cluster (noise points).
+HDBSCAN (Hierarchical Density-Based Spatial Clustering of Applications with Noise) is primarily a clustering algorithm, but it can also be used for anomaly detection by identifying points that do not belong to any cluster (noise points). [Python Documentation is here](https://hdbscan.readthedocs.io/en/latest/basic_hdbscan.html)
 
 9. [ClusterValidityIndices.jl](https://github.com/baggepinnen/ClusterValidityIndices.jl)
 Although this package is focused on cluster validity indices, it can be useful in anomaly detection to validate the presence of anomalous clusters within a dataset.
@@ -103,12 +103,16 @@ Although this package is focused on cluster validity indices, it can be useful i
 10. [GaussianMixtures.jl](https://github.com/davidavdav/GaussianMixtures.jl)
 A library for modeling data using Gaussian Mixture Models (GMMs). Anomalies can be detected by identifying data points with low likelihood under the fitted GMM.
 
+11. [MultivariateAnomalies.jl](https://github.com/milanflach/MultivariateAnomalies.jl/tree/master)
+
 
 ### Julia Examples for Anomaly Detection
 This section contains example scripts showcasing anomaly detection implementations in Julia.
 
 
 ### Resources to Learning Julia for Anomaly Detection
+
+1. [Anomaly Detection Algorithms](https://milanflach.github.io/MultivariateAnomalies.jl/stable/man/DetectionAlgorithms/)
 
 ### Rust
 
