@@ -51,14 +51,34 @@ repository aims to provide something of value.
 
 ## Contents
 
+### Python Libraries for Anomaly Detection
+
+1. [PyOD](https://github.com/yzhao062/pyod)
+PyOD is a comprehensive and scalable Python library for detecting outlying objects in multivariate data. It includes over 50 detection algorithms, such as the Isolation Forest, k-Nearest Neighbors (kNN), and AutoEncoder. It supports both classical and deep learning models, making it suitable for a wide range of anomaly detection tasks. [PyOD docs](https://pyod.readthedocs.io/en/latest/)
+
+2. [PyGOD (Python Graph Outlier Detection)](https://github.com/pygod-team/pygod)
+Graph based outlier detection library. It includes algorithms designed to detect anomalies in graph data, such as social networks or security systems. PyGOD leverages PyTorch and PyTorch Geometric to provide efficient implementations of various graph-based anomaly detection methods. [PyGOD docs](https://docs.pygod.org/en/latest/)
+
+3. [Time-series Outlier Detection (TODS)](https://tods-doc.github.io/)
+
+4. [Automating Outlier Detection via Meta-Learning (MetaOD)](https://github.com/yzhao062/MetaOD?tab=readme-ov-file)
+
+5. [ADTK (Anomaly Detection Toolkit)](https://github.com/arundo/adtk)
+Unsupervised/rule-based time series anomaly detection. It provides tools for detecting anomalies based on seasonal patterns, trend deviations, and other customizable rules. ADTK is highly flexible and suitable for various time series anomaly detection applications.
+
+6. [Anomalib](https://github.com/openvinotoolkit/anomalib)
+A Deep learning library that collects state-of-the-art anomaly detection algorithms for benchmarking on public and private datasets. It provides ready-to-use implementations of various anomaly detection algorithms and tools for developing and deploying custom models. Anomalib is especially useful for visual anomaly detection.
+
+7. [scikit-learn](https://scikit-learn.org/stable/modules/outlier_detection.html)
+It includes several tools for anomaly detection, such as the One-Class SVM, Isolation Forest, and Elliptic Envelope. These methods can be applied to identify outliers in datasets and are integrated with the rest of the scikit-learn ecosystem for easy use in machine learning pipelines.
+
+
 ### Python Libraries for Outlier (Anomaly) Detection
 
 - **Libraries**: Lists and descriptions of Python libraries used for anomaly detection:
 	1. [Python for Outlier Detection (PyOD)](https://pyod.readthedocs.io/en/latest/)
-	2. [Python for Graph Outlier Detection(PyGOD)](https://docs.pygod.org/en/latest/)
-	3. [Time-series Outlier Detection (TODS)](https://tods-doc.github.io/)
-	4. [Automating Outlier Detection via Meta-Learning (MetaOD)](https://github.com/yzhao062/MetaOD?tab=readme-ov-file)
-
+	2. [Python for Graph Outlier Detection(PyGOD)]()
+	
 
 ### Python Examples:
 
@@ -125,9 +145,22 @@ A Rust library that extends `ndarray` with statistical methods, including tools 
 1. **Examples**: Sample projects and code snippets demonstrating the use of Rust for anomaly detection.
 2. **Guides**: Step-by-step guides on setting up and using Rust libraries for anomaly detection.
 
-### C++
 
-**Libraries**: C++ libraries for anomaly detection, including `OpenCV`, `dlib`, and `mlpack`.
+
+### C++ Libraries for Anomaly Detection
+
+1. [Anomalib](https://github.com/openvinotoolkit/anomalib)
+Anomalib is a deep learning library designed for anomaly detection, offering a collection of state-of-the-art algorithms. It focuses on visual anomaly detection, providing tools for developing, training, and deploying anomaly detection models. The library includes a modular API and CLI for ease of use, supporting various models and benchmarks.
+
+2. [AnomalyDetection.cpp](https://github.com/ankane/AnomalyDetection.cpp)
+This library is a C++ port of the AnomalyDetection R package, designed for time series anomaly detection. It provides methods for detecting anomalies in time-series data, with configurable parameters like statistical significance level and maximum anomalies percentage. It uses seasonal-trend decomposition and quantile functions for its calculations.
+
+3. [Anomaly Detection in C++](https://github.com/mtrazzi/anomaly-detection-in-cpp)
+This implementation is based on an anomaly detection project from Andrew Ng's machine learning course on Coursera. It uses a multivariate normal distribution to estimate the probability distribution of the data and computes the best threshold epsilon for classifying data points as anomalies.
+
+4. [OutlierTree](https://github.com/david-cortes/outliertree)
+OutlierTree is an explainable outlier/anomaly detection library that uses decision tree conditioning. It is similar to the GritBot software and supports various data types, handling missing values effectively. The library is written in C++ and can be interfaced with Python and R. It provides human-readable justifications for flagged outliers, making it ideal for exploratory data analysis.
+
 
 
 ### C++ Examples 
@@ -137,13 +170,26 @@ A Rust library that extends `ndarray` with statistical methods, including tools 
 
 ### Resources:
 
-Additional resources such as tutorials and documentation links for C++ libraries.
+
 
 
 ### Java Libraries for Anomaly Detection 
 
+# Java Libraries for Anomaly Detection
+
+## 1. [EGADS (Extensible Generic Anomaly Detection System)](https://github.com/yahoo/egads)
+EGADS is an open-source Java package developed by Yahoo for automatically detecting anomalies in large-scale time-series data. It supports a variety of anomaly detection techniques and can be integrated into existing monitoring infrastructures. The library separates the time-series modeling and anomaly detection components, allowing for flexible customization of models.
+
+## 2. [Tribuo](https://tribuo.org/)
+Tribuo is a comprehensive machine learning library for Java that includes anomaly detection capabilities. It provides infrastructure for anomaly detection tasks and supports one-class SVM (LibSVM) and one-class linear SVM (LibLinear). Tribuo also offers a rich set of features for classification, regression, and clustering, making it a versatile tool for various machine learning applications.
+
+## 3. [Java Anomaly Detection Library](https://github.com/ExpediaDotCom/adaptive-alerting)
+The Adaptive Alerting library by Expedia provides tools for anomaly detection and alerting in time-series data. It includes several built-in anomaly detection models, such as the Seasonal Hybrid Extreme Studentized Deviate (S-H-ESD) and Holt-Winters models, and supports the addition of custom models.
+
+
 
 ### Java Examples for Anomaly Detection 
+
 
 ### Java Additional Resources 
 
