@@ -1,6 +1,4 @@
 # Anomaly Detection Resources
-==============================
-
 A collection of libraries, frameworks, and tools for anomaly detection in various programming languages, including Python, Julia, Rust, Java and C++. Each subdirectory contains libraries, examples, and tools relevant to the specific language for implementing and understanding anomaly detection algorithms. This repository aims to provide a comprehensive resource for developers, researchers, and data scientists working on detecting anomalies in 
 various datasets.
 
@@ -9,12 +7,10 @@ various datasets.
 As the field of anomaly detection continues to grow, it can be challenging to keep track of the many libraries and frameworks available for different tasks and applications. This repository seeks to address that challenge by providing a centralized location for discovering and exploring these resources.
 
 ## Usage: **How can I use this repository?**
---------------------------------------------
 
 You can use this repository as a starting point for your own projects, or as a reference guide for learning about different libraries and frameworks for anomaly detection. Whether you're a beginner looking to get started with anomaly detection or an experienced practitioner seeking new tools and techniques, this repository aims to provide something of value.
 
 ## What's inside?
------------------
 
 This repository contains a curated list of libraries, frameworks, and tools for anomaly detection, including:
 
@@ -25,7 +21,6 @@ Outlier Factor, etc.)
 * Resources for specific industries or domains (e.g., healthcare, finance, IoT, etc.)
 
 ## Directory Structure
-----------------------
 - **Python/**: Libraries and tools for anomaly detection using Python.
 - **Julia/**: Resources for implementing anomaly detection in Julia.
 - **Rust/**: Libraries and examples for anomaly detection in Rust.
@@ -34,13 +29,11 @@ Outlier Factor, etc.)
 
 
 ## Contributing: How can I contribute?
-------------------------------------------
 
 This repository is open to contributions! If you have a favorite library, framework, or tool for anomaly detection, examples, or resources related to anomaly detection in Python, Julia, Rust, Java or C++, feel free to submit a pull request or open an issue, please share it with the community by creating a pull request. We welcome additions, updates, and suggestions on how to make this repository more valuable.
 
 
 ## How to Contribute
-----------------------
 
 1. Fork the repository.
 2. Create a new branch for your feature or bug fix.
@@ -49,10 +42,9 @@ This repository is open to contributions! If you have a favorite library, framew
 
 
 
-## Contents
------------
+# Contents
 
-### Python Libraries for Anomaly Detection
+## Python Libraries for Anomaly Detection
 
 1. [PyOD](https://github.com/yzhao062/pyod)
 PyOD is a comprehensive and scalable Python library for detecting outlying objects in multivariate data. It includes over 50 detection algorithms, such as the Isolation Forest, k-Nearest Neighbors (kNN), and AutoEncoder. It supports both classical and deep learning models, making it suitable for a wide range of anomaly detection tasks. [PyOD docs](https://pyod.readthedocs.io/en/latest/)
@@ -72,13 +64,6 @@ A Deep learning library that collects state-of-the-art anomaly detection algorit
 
 7. [scikit-learn](https://scikit-learn.org/stable/modules/outlier_detection.html)
 It includes several tools for anomaly detection, such as the One-Class SVM, Isolation Forest, and Elliptic Envelope. These methods can be applied to identify outliers in datasets and are integrated with the rest of the scikit-learn ecosystem for easy use in machine learning pipelines.
-
-
-### Python Libraries for Outlier (Anomaly) Detection
-
-- **Libraries**: Lists and descriptions of Python libraries used for anomaly detection:
-	1. [Python for Outlier Detection (PyOD)](https://pyod.readthedocs.io/en/latest/)
-	2. [Python for Graph Outlier Detection(PyGOD)]()
 	
 
 ### Python Examples:
@@ -90,7 +75,7 @@ This section contains:
 
 
 
-### Julia Libraries for Anomaly Detection
+## Julia Libraries for Anomaly Detection
 
 This section contains the available in Julia libraries for anomaly detection: 
 
@@ -115,16 +100,16 @@ A library for modeling data using Gaussian Mixture Models (GMMs). Anomalies can 
 7. [MultivariateAnomalies.jl](https://github.com/milanflach/MultivariateAnomalies.jl/tree/master)
 This package is designed for detecting anomalies in multivariate data using various statistical methods. It provides a robust framework for anomaly detection in high-dimensional datasets.
 
-### Julia Examples for Anomaly Detection
+## Julia Examples for Anomaly Detection
 
 This section contains example scripts showcasing anomaly detection implementations in Julia.
 
 
-### Resources to Learning Julia for Anomaly Detection
+## Resources to Learning Julia for Anomaly Detection
 
 1. [Anomaly Detection Algorithms](https://milanflach.github.io/MultivariateAnomalies.jl/stable/man/DetectionAlgorithms/)
 
-### Rust 
+## Rust 
 
 Rust libraries and crates for anomaly detection: 
 
@@ -141,14 +126,12 @@ SmartCore is a Rust library for machine learning that includes various algorithm
 4. [ndarray-stats](https://github.com/rust-ndarray/ndarray-stats)
 A Rust library that extends `ndarray` with statistical methods, including tools for detecting anomalies in data. It is useful for data analysis and preprocessing.
 
-### Rust Examples for Anomaly Detection
+## Rust Examples for Anomaly Detection
 
 1. **Examples**: Sample projects and code snippets demonstrating the use of Rust for anomaly detection.
 2. **Guides**: Step-by-step guides on setting up and using Rust libraries for anomaly detection.
 
-
-
-### C++ Libraries for Anomaly Detection
+## C++ Libraries for Anomaly Detection
 
 1. [Anomalib](https://github.com/openvinotoolkit/anomalib)
 Anomalib is a deep learning library designed for anomaly detection, offering a collection of state-of-the-art algorithms. It focuses on visual anomaly detection, providing tools for developing, training, and deploying anomaly detection models. The library includes a modular API and CLI for ease of use, supporting various models and benchmarks.
@@ -162,19 +145,15 @@ This implementation is based on an anomaly detection project from Andrew Ng's ma
 4. [OutlierTree](https://github.com/david-cortes/outliertree)
 OutlierTree is an explainable outlier/anomaly detection library that uses decision tree conditioning. It is similar to the GritBot software and supports various data types, handling missing values effectively. The library is written in C++ and can be interfaced with Python and R. It provides human-readable justifications for flagged outliers, making it ideal for exploratory data analysis.
 
-
-
-### C++ Examples 
+## C++ Examples 
 
 - **Examples**: Example code and projects for performing anomaly detection using C++.
 
 
-### Resources:
+## Resources:
 
 
-
-
-### Java Libraries for Anomaly Detection 
+## Java Libraries for Anomaly Detection 
 
 # Java Libraries for Anomaly Detection
 
@@ -185,23 +164,10 @@ EGADS is an open-source Java package developed by Yahoo for automatically detect
 Tribuo is a comprehensive machine learning library for Java that includes anomaly detection capabilities. It provides infrastructure for anomaly detection tasks and supports one-class SVM (LibSVM) and one-class linear SVM (LibLinear). Tribuo also offers a rich set of features for classification, regression, and clustering, making it a versatile tool for various machine learning applications.
 
 ## 3. [Java Anomaly Detection Library](https://github.com/ExpediaDotCom/adaptive-alerting)
-The Adaptive Alerting library by Expedia provides tools for anomaly detection and alerting in time-series data. It includes several built-in anomaly detection models, such as the Seasonal Hybrid Extreme Studentized Deviate (S-H-ESD) and Holt-Winters models, and supports the addition of custom models.
+The Adaptive Alerting library by Expedia provides tools for anomaly detection and alerting in time-series data. It includes several built-in anomaly detection models, such as the Seasonal Hybrid Extreme Studentized Deviate (SH-ESD) and Holt-Winters models, and supports the addition of custom models.
 
-
-
-### Java Examples for Anomaly Detection 
-
+## Java Examples for Anomaly Detection 
 
 ### Java Additional Resources 
-
-
-
-## Anomaly Detection Resources 
-
-1. [Github Repo for Anomaly Detection Resources](https://github.com/yzhao062/anomaly-detection-resources)
-
-
-## License
-
-This repository is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
-
+# Anomaly Detection Resources 
+1. [Github Repo for Anomaly Detection R
