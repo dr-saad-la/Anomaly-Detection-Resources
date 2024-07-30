@@ -1,10 +1,9 @@
 # Anomaly Detection Resources
 
-This repository contains resources for anomaly detection in various programming languages, including Python, Julia, Rust, Java and C++. Each subdirectory contains libraries, examples, and tools relevant to the specific language for implementing and understanding anomaly detection algorithms.
-
-
 A collection of libraries, frameworks, and tools for anomaly detection. This repository aims to provide a comprehensive resource for developers, researchers, and data scientists working on detecting anomalies in 
 various datasets.
+
+It contains resources for anomaly detection in various programming languages, including Python, Julia, Rust, Java and C++. Each subdirectory contains libraries, examples, and tools relevant to the specific language for implementing and understanding anomaly detection algorithms.
 
 **Why this repository?**
 
@@ -48,9 +47,9 @@ repository aims to provide something of value.
 ### Python 
 
 - **Libraries**: Lists and descriptions of Python libraries used for anomaly detection:
-	1. [PyOD]()
-	2. []()
-	3. 
+	1. [Python for Outlier Detection (PyOD)](https://pyod.readthedocs.io/en/latest/)
+	2. [Python for Graph Outlier Detection(PyGOD)](https://docs.pygod.org/en/latest/)
+	3. [Time-series Outlier Detection (TODS)](https://tods-doc.github.io/)
 - **Examples**: Example scripts demonstrating the use of various libraries for anomaly detection tasks.
 - **Notebooks**: Jupyter notebooks for interactive anomaly detection experiments.
 
