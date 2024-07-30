@@ -68,11 +68,47 @@ This section contains:
 2. **Notebooks**: Jupyter notebooks for interactive anomaly detection experiments.
 
 
-### Julia Libraries for Outlier Detection
 
-- **Libraries**: Resources and libraries available in Julia for anomaly detection, including `AnomalyDetection.jl` and `TSAnomalies.jl`.
-- **Examples**: Example scripts showcasing anomaly detection implementations in Julia.
-- **Documentation**: Links to official documentation and community tutorials.
+### Julia Libraries for Anomaly Detection
+
+This section contains the available in Julia libraries for anomaly detection: 
+
+1. [AnomalyDetection.jl](https://github.com/sglyon/AnomalyDetection.jl)
+It provides tools for detecting anomalies in time-series data. It includes both univariate and multivariate anomaly detection methods.
+
+2. [OutlierDetection.jl](https://github.com/diarguda/OutlierDetection.jl)
+This offers a collection of outlier detection methods for both univariate and multivariate data. It includes techniques such as the Isolation Forest, One-Class SVM, and Local Outlier Factor (LOF).
+
+3. [KNNAnomaly.jl](https://github.com/zgornel/KNNAnomaly.jl)
+A simple and efficient implementation of the k-Nearest Neighbors (kNN) algorithm for anomaly detection. It is well-suited for detecting anomalies in datasets with complex distributions.
+
+4. [LOF.jl](https://github.com/rahulkp220/LOF.jl)
+An implementation of the Local Outlier Factor (LOF) algorithm in Julia. This method is particularly useful for detecting local outliers in data, which can be missed by global anomaly detection methods.
+
+5. [IsolationForest.jl](https://github.com/sylvaticus/IsolationForest.jl)
+A library implementing the Isolation Forest algorithm for anomaly detection. This method is known for its efficiency and effectiveness in identifying anomalies in high-dimensional datasets.
+
+6. [ChangeDetection.jl](https://github.com/baggepinnen/ChangeDetection.jl)
+This package is designed for detecting changes and anomalies in time-series data. It provides a variety of methods for both online and offline change detection.
+
+7. [Boltzmann.jl](https://github.com/dfdx/Boltzmann.jl)
+While primarily a library for energy-based models, Boltzmann.jl can also be used for anomaly detection tasks by modeling the probability distribution of normal data and identifying deviations from it.
+
+8. [HDBSCAN.jl](https://github.com/baggepinnen/HDBSCAN.jl)
+HDBSCAN (Hierarchical Density-Based Spatial Clustering of Applications with Noise) is primarily a clustering algorithm, but it can also be used for anomaly detection by identifying points that do not belong to any cluster (noise points).
+
+9. [ClusterValidityIndices.jl](https://github.com/baggepinnen/ClusterValidityIndices.jl)
+Although this package is focused on cluster validity indices, it can be useful in anomaly detection to validate the presence of anomalous clusters within a dataset.
+
+10. [GaussianMixtures.jl](https://github.com/davidavdav/GaussianMixtures.jl)
+A library for modeling data using Gaussian Mixture Models (GMMs). Anomalies can be detected by identifying data points with low likelihood under the fitted GMM.
+
+
+### Julia Examples for Anomaly Detection
+This section contains example scripts showcasing anomaly detection implementations in Julia.
+
+
+### Resources to Learning Julia for Anomaly Detection
 
 ### Rust
 
