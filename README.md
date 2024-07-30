@@ -20,13 +20,20 @@ Outlier Factor, etc.)
 * Tools for preprocessing and visualizing data for anomaly detection
 * Resources for specific industries or domains (e.g., healthcare, finance, IoT, etc.)
 
-**How can I contribute?**
+## Contributing: **How can I contribute?**
 
-This repository is open to contributions! If you have a favorite library, framework, or tool for anomaly 
-detection, please share it with the community by creating a pull request. We welcome additions, updates, and 
-suggestions on how to make this repository more valuable.
+This repository is open to contributions! If you have a favorite library, framework, or tool for anomaly detection, examples, or resources related to anomaly detection in Python, Julia, Rust, Java or C++, feel free to submit a pull request or open an issue, please share it with the community by creating a pull request. We welcome additions, updates, and suggestions on how to make this repository more valuable.
 
-**How can I use this repository?**
+
+### How to Contribute
+
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Commit your changes.
+4. Push your branch and create a pull request.
+
+
+## Usage: **How can I use this repository?**
 
 You can use this repository as a starting point for your own projects, or as a reference guide for learning 
 about different libraries and frameworks for anomaly detection. Whether you're a beginner looking to get 
@@ -44,16 +51,23 @@ repository aims to provide something of value.
 
 ## Contents
 
-### Python 
+### Python Libraries for Outlier (Anomaly) Detection
 
 - **Libraries**: Lists and descriptions of Python libraries used for anomaly detection:
 	1. [Python for Outlier Detection (PyOD)](https://pyod.readthedocs.io/en/latest/)
 	2. [Python for Graph Outlier Detection(PyGOD)](https://docs.pygod.org/en/latest/)
 	3. [Time-series Outlier Detection (TODS)](https://tods-doc.github.io/)
-- **Examples**: Example scripts demonstrating the use of various libraries for anomaly detection tasks.
-- **Notebooks**: Jupyter notebooks for interactive anomaly detection experiments.
+	4. [Automating Outlier Detection via Meta-Learning (MetaOD)](https://github.com/yzhao062/MetaOD?tab=readme-ov-file)
 
-### Julia
+
+### Python Examples:
+
+This section contains:
+	1. **Example scripts**: demonstrating the use of various libraries for anomaly detection tasks.
+	2. - **Notebooks**: Jupyter notebooks for interactive anomaly detection experiments.
+
+
+### Julia Libraries for Outlier Detection
 
 - **Libraries**: Resources and libraries available in Julia for anomaly detection, including `AnomalyDetection.jl` and `TSAnomalies.jl`.
 - **Examples**: Example scripts showcasing anomaly detection implementations in Julia.
@@ -71,16 +85,15 @@ repository aims to provide something of value.
 - **Examples**: Example code and projects for performing anomaly detection using C++.
 - **Resources**: Additional resources such as tutorials and documentation links for C++ libraries.
 
-## Contributing
 
-Contributions to this repository are welcome. If you have any libraries, examples, or resources related to anomaly detection in Python, Julia, Rust, or C++, feel free to submit a pull request or open an issue.
 
-### How to Contribute
+### Anomaly Detection Resources 
 
-1. Fork the repository.
-2. Create a new branch for your feature or bug fix.
-3. Commit your changes.
-4. Push your branch and create a pull request.
+1. [Github Repo for Anomaly Detection Resources](https://github.com/yzhao062/anomaly-detection-resources)
+
+
+
+
 
 ## License
 
