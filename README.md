@@ -79,24 +79,20 @@ It provides tools for detecting anomalies in time-series data. It includes both 
 2. [OutlierDetection.jl](https://github.com/OutlierDetectionJL/OutlierDetection.jl)
 This offers a collection of outlier detection methods for both univariate and multivariate data. It includes techniques such as the Isolation Forest, One-Class SVM, and Local Outlier Factor (LOF).
 
-3. [ChangeDetection.jl](https://github.com/baggepinnen/ChangeDetection.jl)
-This package is designed for detecting changes and anomalies in time-series data. It provides a variety of methods for both online and offline change detection.
-
-4. [Boltzmann.jl](https://github.com/dfdx/Boltzmann.jl)
+3. [Boltzmann.jl](https://github.com/dfdx/Boltzmann.jl)
 While primarily a library for energy-based models, Boltzmann.jl can also be used for anomaly detection tasks by modeling the probability distribution of normal data and identifying deviations from it.
 
-5. [HDBSCAN.jl](https://github.com/baggepinnen/HDBSCAN.jl)
-HDBSCAN (Hierarchical Density-Based Spatial Clustering of Applications with Noise) is primarily a clustering algorithm, but it can also be used for anomaly detection by identifying points that do not belong to any cluster (noise points).
+4. [HDBSCAN.jl](https://github.com/baggepinnen/HDBSCAN.jl)
+HDBSCAN (Hierarchical Density-Based Spatial Clustering of Applications with Noise) is primarily a clustering algorithm, but it can also be used for anomaly detection by identifying points that do not belong to any cluster (noise points). [Python Documentation is here](https://hdbscan.readthedocs.io/en/latest/basic_hdbscan.html)
 
-6. [ClusterValidityIndices.jl](https://github.com/AP6YC/ClusterValidityIndices.jl)
+5. [ClusterValidityIndices.jl](https://github.com/AP6YC/ClusterValidityIndices.jl)
 Although this package is focused on cluster validity indices, it can be useful in anomaly detection to validate the presence of anomalous clusters within a dataset [oai_citation:1,GitHub - AP6YC/ClusterValidityIndices.jl: A Julia package for Cluster Validity Indices (CVIs).](https://github.com/AP6YC/ClusterValidityIndices.jl) [oai_citation:2,GitHub - AP6YC/ICVI-Examples: Example usage of the Incremental Cluster Validity Indices (ICVI) implemented in the AdaptiveResonance.jl julia package.](https://github.com/AP6YC/ICVI-Examples).
 
-7. [GaussianMixtures.jl](https://github.com/davidavdav/GaussianMixtures.jl)
+6. [GaussianMixtures.jl](https://github.com/davidavdav/GaussianMixtures.jl)
 A library for modeling data using Gaussian Mixture Models (GMMs). Anomalies can be detected by identifying data points with low likelihood under the fitted GMM.
 
-8. [MultivariateAnomalies.jl](https://github.com/milanflach/MultivariateAnomalies.jl/tree/master)
+7. [MultivariateAnomalies.jl](https://github.com/milanflach/MultivariateAnomalies.jl/tree/master)
 This package is designed for detecting anomalies in multivariate data using various statistical methods. It provides a robust framework for anomaly detection in high-dimensional datasets.
-
 
 ### Julia Examples for Anomaly Detection
 
@@ -107,26 +103,55 @@ This section contains example scripts showcasing anomaly detection implementatio
 
 1. [Anomaly Detection Algorithms](https://milanflach.github.io/MultivariateAnomalies.jl/stable/man/DetectionAlgorithms/)
 
-### Rust
+### Rust 
 
-- **Libraries**: Rust libraries and crates for anomaly detection, such as `anomaly-detection` and `ndarray`.
-- **Examples**: Sample projects and code snippets demonstrating the use of Rust for anomaly detection.
-- **Guides**: Step-by-step guides on setting up and using Rust libraries for anomaly detection.
+Rust libraries and crates for anomaly detection: 
+
+
+1. [rustlearn](https://github.com/maciejkula/rustlearn)
+Rustlearn is a machine learning library in Rust that includes various algorithms, including tools for anomaly detection. It is focused on performance and ease of use.
+
+2. [linfa](https://github.com/rust-ml/linfa)
+Linfa is a comprehensive machine learning library for Rust that provides tools for a wide range of tasks, including anomaly detection. It is inspired by Python's scikit-learn.
+
+3. [smartcore](https://github.com/smartcorelib/smartcore)
+SmartCore is a Rust library for machine learning that includes various algorithms for anomaly detection, such as One-Class SVM and Isolation Forest.
+
+4. [ndarray-stats](https://github.com/rust-ndarray/ndarray-stats)
+A Rust library that extends `ndarray` with statistical methods, including tools for detecting anomalies in data. It is useful for data analysis and preprocessing.
+
+### Rust Examples for Anomaly Detection
+
+1. **Examples**: Sample projects and code snippets demonstrating the use of Rust for anomaly detection.
+2. **Guides**: Step-by-step guides on setting up and using Rust libraries for anomaly detection.
 
 ### C++
 
-- **Libraries**: C++ libraries for anomaly detection, including `OpenCV`, `dlib`, and `mlpack`.
+**Libraries**: C++ libraries for anomaly detection, including `OpenCV`, `dlib`, and `mlpack`.
+
+
+### C++ Examples 
+
 - **Examples**: Example code and projects for performing anomaly detection using C++.
-- **Resources**: Additional resources such as tutorials and documentation links for C++ libraries.
+
+
+### Resources:
+
+Additional resources such as tutorials and documentation links for C++ libraries.
+
+
+### Java Libraries for Anomaly Detection 
+
+
+### Java Examples for Anomaly Detection 
+
+### Java Additional Resources 
 
 
 
-### Anomaly Detection Resources 
+## Anomaly Detection Resources 
 
 1. [Github Repo for Anomaly Detection Resources](https://github.com/yzhao062/anomaly-detection-resources)
-
-
-
 
 
 ## License
