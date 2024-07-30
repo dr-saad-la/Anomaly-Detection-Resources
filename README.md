@@ -63,8 +63,9 @@ repository aims to provide something of value.
 ### Python Examples:
 
 This section contains:
-	1. **Example scripts**: demonstrating the use of various libraries for anomaly detection tasks.
-	2. - **Notebooks**: Jupyter notebooks for interactive anomaly detection experiments.
+
+1. **Example scripts**: demonstrating the use of various libraries for anomaly detection tasks.
+2. **Notebooks**: Jupyter notebooks for interactive anomaly detection experiments.
 
 
 ### Julia Libraries for Outlier Detection
