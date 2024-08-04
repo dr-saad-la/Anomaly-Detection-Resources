@@ -163,3 +163,6 @@ Python/datasets_files_name.json
 
 # Ignore the datasets forlder
 datasets/
+
+# Ignore the adbench directory
+ADBench/
