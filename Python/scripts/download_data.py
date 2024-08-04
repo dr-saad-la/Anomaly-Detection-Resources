@@ -39,30 +39,51 @@ expected_folders = ['CV_by_ResNet18', 'NLP_by_BERT', 'Classical']
 
 
 # Define the function to check if all datasets are already downloaded
-def all_datasets_exist(base_dir, folders):
-    """
-    Checks if all datasets are present in the specified base directory.
+def check_datasets_exist(base_dir, folders, files_dict=None):
+    """Checks if all specified datasets are present in the base directory.
 
-    :param base_dir: The base directory where datasets are stored.
-    :param folders: A list of folder names expected to be present in the base directory.
-    :param files_dict: Optional dictionary specifying expected files in each folder.
-    :return: True if all folders and files are present, False otherwise.
+    This function verifies the presence of specified folders within a base directory 
+    and checks if the required files within those folders exist.
+
+    Args:
+        base_dir (str): The base directory where datasets are expected to be stored.
+        folders (list of str): A list of folder names expected to be present in the base directory.
+        files_dict (dict, optional): A dictionary mapping folder names to a list of expected filenames.
+                                     Default is None, meaning no specific file check is performed.
+
+    Returns:
+        bool: True if all specified folders and their required files are present, False otherwise.
+
+    Raises:
+        FileNotFoundError: If the base directory does not exist.
     """
+    if not os.path.exists(base_dir):
+        raise FileNotFoundError(f"The base directory does not exist: {base_dir}")
+    
     for folder in folders:
         folder_path = os.path.join(base_dir, folder)
-        print(folder_path)
-        # Check if folder exists
+
         if not os.path.exists(folder_path):
             print(f"Missing folder: {folder_path}")
             return False
-        # Check if folder is not empty
-        if not os.listdir(folder_path):
+        
+        folder_contents = os.listdir(folder_path)
+        if not folder_contents:
             print(f"Folder is empty: {folder_path}")
             return False
+        
+        if files_dict:
+            expected_files = files_dict.get(folder, [])
+            for expected_file in expected_files:
+                file_path = os.path.join(folder_path, expected_file)
+                if not os.path.exists(file_path):
+                    print(f"Missing file: {file_path}")
+                    return False
+
     return True
 
 # Check if all datasets are already downloaded
-if all_datasets_exist(dataset_dir, expected_folders):
+if check_datasets_exist(dataset_dir, expected_folders):
     print("All datasets are already downloaded.")
 else:
     # Attempt to download datasets
