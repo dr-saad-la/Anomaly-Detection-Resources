@@ -160,3 +160,6 @@ cython_debug/
 
 Python/.jupyter/
 Python/datasets_files_name.json
+
+# Ignore the datasets forlder
+datasets/
