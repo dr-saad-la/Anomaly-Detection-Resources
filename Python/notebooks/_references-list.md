@@ -30,6 +30,11 @@ This document provides a list of references for outlier detection algorithms. No
    [DOI:10.1023/B:AIRE.0000045502.10941.a9](https://link.springer.com/article/10.1023/B:AIRE.0000045502.10941.a9)  
    - A comprehensive survey of outlier detection methodologies, this paper provides context for understanding where ABOD fits within the larger landscape of outlier detection techniques.
 
+7. **Campos, G. O., Zimek, A., Sander, J., Campello, R. J., Micenková, B., Schubert, E., ... & Houle, M. E. (2016).**  
+   *On the evaluation of unsupervised outlier detection: measures, datasets, and an empirical study*. Data Mining and Knowledge Discovery, 30(4), 891-927.  
+   [DOI:10.1007/s10618-015-0444-8](https://doi.org/10.1007/s10618-015-0444-8)  
+   - This paper provides a comprehensive evaluation of unsupervised outlier detection techniques, discussing various measures and datasets, and presenting an empirical study on their effectiveness. It is a key resource for understanding the challenges and best practices in outlier detection evaluation.
+
 ### Books
 
 1. **Aggarwal, C. C. (2013).** *Outlier Analysis*. Springer.  
@@ -84,3 +89,53 @@ This document provides a list of references for outlier detection algorithms. No
 - **KDNuggets: An Introduction to Anomaly Detection**  
   [KDNuggets](https://www.kdnuggets.com/2017/04/datascience-introduction-anomaly-detection.html)  
   - This introduction to anomaly detection discusses the concept, significance, and various methods for identifying anomalies, providing a solid foundation for those new to the field.
+ 
+### Sources for Anomaly Detection Datasets
+
+1. **UCI Machine Learning Repository**  
+   [UCI Repository](https://archive.ics.uci.edu/ml/index.php)  
+   - The UCI Machine Learning Repository offers a vast collection of datasets for machine learning research, including several datasets that are suitable for anomaly detection. Some popular datasets include the `KDD Cup 1999`, `Arrhythmia`, and `Shuttle` datasets.
+
+2. **Kaggle Datasets**  
+   [Kaggle](https://www.kaggle.com/datasets)  
+   - Kaggle provides a wide variety of datasets for data science competitions and research, including those focused on anomaly detection. You can find datasets such as `Credit Card Fraud Detection`, `Unsupervised Anomaly Detection`, and more.
+
+3. **ODDS Library (Outlier Detection DataSets)**  
+   [ODDS Library](http://odds.cs.stonybrook.edu/)  
+   - The ODDS library is a comprehensive collection of outlier detection datasets from various domains such as healthcare, finance, and network security. This repository is specifically tailored for benchmarking outlier detection algorithms.
+
+4. **KDNuggets: Anomaly Detection Datasets**  
+   [KDNuggets Article](https://www.kdnuggets.com/2022/06/20-datasets-outlier-detection.html)  
+   - KDNuggets provides a curated list of datasets suitable for anomaly detection, with descriptions and links to access them. This list includes datasets like `Thyroid Disease`, `Mammography`, and `Satellite`.
+
+5. **Anomaly Detection Benchmark (ADBench)**  
+   [ADBench GitHub](https://github.com/Minqi824/ADBench)  
+   - ADBench is a benchmark platform for anomaly detection, offering a wide range of datasets specifically designed for evaluating the performance of anomaly detection algorithms.
+
+6. **Google Dataset Search**  
+   [Google Dataset Search](https://datasetsearch.research.google.com/)  
+   - Google's Dataset Search tool allows you to find datasets across various domains, including those relevant to anomaly detection. You can search using specific keywords related to your field of interest.
+
+7. **Data.gov**  
+   [Data.gov](https://www.data.gov/)  
+   - The U.S. government's open data portal provides a wealth of datasets from different sectors, some of which can be used for anomaly detection research, especially in fields like transportation and healthcare.
+
+8. **Yahoo Anomaly Detection Dataset**  
+   [Yahoo Webscope](https://webscope.sandbox.yahoo.com/catalog.php?datatype=s&did=70)  
+   - Yahoo's anomaly detection dataset is specifically designed for benchmarking time-series anomaly detection algorithms. It includes both real and synthetic data with labeled anomalies.
+
+9. **DAMI: Disguised and Anomalous Motifs in Time Series**  
+   [DAMI Datasets](http://www.dbs.ifi.lmu.de/research/outlier-evaluation/DAMI/)  
+   - This repository offers a collection of time series datasets with hidden motifs and anomalies, providing a challenging testbed for time series anomaly detection algorithms.
+
+10. **Kaggle: Network Intrusion Detection**  
+    [Kaggle Network Intrusion](https://www.kaggle.com/datasets/sampadab17/network-intrusion-detection)  
+    - This dataset is specifically designed for detecting network intrusions, offering labeled examples of normal and anomalous network traffic, making it suitable for cybersecurity-related anomaly detection research.
+
+11. **Dataverse: Anomaly Detection Datasets**  
+    [Harvard Dataverse](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/OPQMVF)  
+    - This dataset hosted on Harvard's Dataverse includes multiple anomaly detection datasets, providing a resource for researchers interested in testing and evaluating anomaly detection algorithms.
+
+12. **RMIT Anomaly Detection Datasets**  
+    [RMIT Figshare](https://rmit.figshare.com/articles/dataset/Datasets_12338_zip/7705127)  
+    - These datasets from RMIT University are provided for anomaly detection research and include various datasets useful for testing and benchmarking different anomaly detection techniques.
