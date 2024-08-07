@@ -139,3 +139,7 @@ This document provides a list of references for outlier detection algorithms. No
 12. **RMIT Anomaly Detection Datasets**  
     [RMIT Figshare](https://rmit.figshare.com/articles/dataset/Datasets_12338_zip/7705127)  
     - These datasets from RMIT University are provided for anomaly detection research and include various datasets useful for testing and benchmarking different anomaly detection techniques.
+   
+13. - **DAMI: Disguised and Anomalous Motifs in Time Series**  
+  [DAMI Datasets](https://www.dbs.ifi.lmu.de/research/outlier-evaluation/DAMI/)  
+  - The DAMI repository offers a collection of time series datasets with disguised and anomalous motifs, providing a challenging testbed for time series anomaly detection algorithms. It is a valuable resource for researchers looking to evaluate the performance of their models on complex time series data.
