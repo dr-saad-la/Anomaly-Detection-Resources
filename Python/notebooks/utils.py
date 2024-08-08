@@ -548,6 +548,7 @@ def hyperopt_objective(params):
     
     return {'loss': -precision_n, 'status': STATUS_OK}
 
+
 def plot_outliers_pairplot(X, y, y_pred, plot_params=None):
     """
     Create a matrix plot for outlier detection results.
