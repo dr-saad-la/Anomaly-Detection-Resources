@@ -3,6 +3,7 @@
 """
 
 import numpy as np
+import pandas as pd
 
 from sklearn.datasets import make_blobs
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
@@ -212,22 +213,20 @@ def apply_abod(X, y, contamination=0.1):
     plt.grid(True)
     plt.show()
 
-
 def apply_abod_advanced(X, y, contamination=0.1, scale_data=True, scaler_type='standard', plot_scores=True, 
-                        plot_outliers=True, n=None, abod_params=None, plot_params=None):
+                        plot_outliers=True, n=None, abod_params=None, plot_params=None, plot_features=None, n_cols=None):
     """
     Apply the Angle-based Outlier Detector (ABOD) algorithm to the dataset.
 
     This function applies the ABOD algorithm to identify outliers in the dataset,
-    evaluates its performance using various metrics, including precision at rank n,
-    and optionally visualizes the results.
+    evaluates its performance using various metrics, and optionally visualizes the results.
 
     Parameters
     ----------
-    X : ndarray of shape (n_samples, n_features)
+    X : ndarray or DataFrame of shape (n_samples, n_features)
         The dataset containing both inliers and outliers.
 
-    y : ndarray of shape (n_samples,)
+    y : ndarray or Series of shape (n_samples,)
         The labels for the dataset, where 0 indicates inliers and 1 indicates outliers.
 
     contamination : float, optional
@@ -246,13 +245,19 @@ def apply_abod_advanced(X, y, contamination=0.1, scale_data=True, scaler_type='s
         Whether to plot the detected outliers. Default is True.
 
     n : int, optional
-        The number of outliers to use for precision at rank n calculation. If None, infer using ground truth.
+        Number of outliers for precision calculation. If None, uses the actual number of outliers.
 
     abod_params : dict, optional
-        Additional keyword arguments to pass to the ABOD model.
+        Additional parameters to pass to the ABOD model.
 
     plot_params : dict, optional
-        Additional keyword arguments to pass to the plotting functions.
+        Additional parameters to pass to the plotting functions.
+
+    plot_features : list of int, optional
+        Features to plot (main feature + other features). If None, no feature plot will be created.
+
+    n_cols : int, optional
+        Number of columns for subplot grid. If None, a reasonable number will be guessed.
 
     Returns
     -------
@@ -268,19 +273,17 @@ def apply_abod_advanced(X, y, contamination=0.1, scale_data=True, scaler_type='s
     Examples
     --------
     >>> X, y = generate_data(n_samples=1000, n_features=2, n_inliers=900, n_outliers=100)
-    >>> results = apply_abod_advanced(X, y, contamination=0.1, scale_data=True, scaler_type='standard', plot_scores=True, plot_outliers=True)
-
-    Notes
-    -----
-    - The ABOD algorithm is particularly effective in high-dimensional datasets.
-    - Ensure that the input data `X` is appropriate for the chosen scaling method.
+    >>> results = apply_abod_advanced(X, y, contamination=0.1, scale_data=True, scaler_type='standard', 
+                                      plot_scores=True, plot_outliers=True, plot_features=[0, 1, 2, 3], n_cols=2)
     """
-
-    # Set default parameters if not provided
     if abod_params is None:
         abod_params = {}
     if plot_params is None:
         plot_params = {}
+
+    # Convert X to a NumPy array if it is a DataFrame
+    if isinstance(X, pd.DataFrame):
+        X = X.values
 
     # Scale the features if required
     if scale_data:
@@ -303,6 +306,12 @@ def apply_abod_advanced(X, y, contamination=0.1, scale_data=True, scaler_type='s
     # Predict outliers
     y_pred = abod_model.labels_  # 0 for inliers, 1 for outliers
     outlier_scores = abod_model.decision_scores_
+
+    # Ensure y and y_pred are NumPy arrays
+    if isinstance(y, pd.Series):
+        y = y.values
+    if isinstance(y_pred, pd.Series):
+        y_pred = y_pred.values
 
     # Evaluate the model performance if true labels are available
     classification_report_str = classification_report(y, y_pred, target_names=['Inlier', 'Outlier'])
@@ -327,16 +336,47 @@ def apply_abod_advanced(X, y, contamination=0.1, scale_data=True, scaler_type='s
 
     # Plot the detected outliers if requested
     if plot_outliers:
-        plt.figure(figsize=(10, 6))
-        plt.scatter(X_scaled[y == 0, 0], X_scaled[y == 0, 1], c='b', marker='o', label='True Inliers', alpha=0.7)
-        plt.scatter(X_scaled[y == 1, 0], X_scaled[y == 1, 1], c='r', marker='x', label='True Outliers', alpha=0.7)
-        plt.scatter(X_scaled[y_pred == 1, 0], X_scaled[y_pred == 1, 1], facecolors='none', edgecolors='g', label='Detected Outliers', alpha=0.5)
-        plt.title("ABOD Outlier Detection Results")
-        plt.xlabel("Feature 1 (scaled)")
-        plt.ylabel("Feature 2 (scaled)")
-        plt.legend()
-        plt.grid(True)
-        plt.show()
+        if X.shape[1] == 2:
+            plt.figure(figsize=(10, 6))
+            plt.scatter(X_scaled[y == 0][:, 0], X_scaled[y == 0][:, 1], c='b', marker='o', label='True Inliers', alpha=0.7)
+            plt.scatter(X_scaled[y == 1][:, 0], X_scaled[y == 1][:, 1], c='r', marker='x', label='True Outliers', alpha=0.7)
+            plt.scatter(X_scaled[y_pred == 1][:, 0], X_scaled[y_pred == 1][:, 1], facecolors='none', edgecolors='g', label='Detected Outliers', alpha=0.5)
+            plt.title("ABOD Outlier Detection Results")
+            plt.xlabel("Feature 1 (scaled)")
+            plt.ylabel("Feature 2 (scaled)")
+            plt.legend()
+            plt.grid(True)
+            plt.show()
+        elif X.shape[1] > 2 and plot_features:
+            main_feature = plot_features[0]
+            other_features = plot_features[1:]
+
+            if n_cols is None:
+                n_cols = min(len(other_features), 3)  # Guess a reasonable number of columns
+
+            n_rows = (len(other_features) + n_cols - 1) // n_cols  # Calculate the number of rows needed
+            fig, axes = plt.subplots(n_rows, n_cols, figsize=(5 * n_cols, 5 * n_rows))
+
+            if n_rows == 1:
+                axes = np.expand_dims(axes, 0)  # Ensure axes is always 2D for consistency
+
+            for idx, (i, feature) in enumerate(zip(range(len(other_features)), other_features)):
+                ax = axes[idx // n_cols, idx % n_cols]
+                ax.scatter(X_scaled[y == 0, main_feature], X_scaled[y == 0, feature], c='b', marker='o', label='True Inliers', alpha=0.7)
+                ax.scatter(X_scaled[y == 1, main_feature], X_scaled[y == 1, feature], c='r', marker='x', label='True Outliers', alpha=0.7)
+                ax.scatter(X_scaled[y_pred == 1, main_feature], X_scaled[y_pred == 1, feature], facecolors='none', edgecolors='g', label='Detected Outliers', alpha=0.5)
+                ax.set_xlabel(f'Feature {main_feature + 1}')
+                ax.set_ylabel(f'Feature {feature + 1}')
+                ax.legend()
+                ax.grid(True)
+
+            # Remove empty subplots
+            for idx in range(len(other_features), n_rows * n_cols):
+                fig.delaxes(axes.flatten()[idx])
+
+            plt.suptitle("ABOD Outlier Detection Results", y=1.02)
+            plt.tight_layout()
+            plt.show()
 
     # Return results as a dictionary
     results = {
@@ -508,3 +548,86 @@ def hyperopt_objective(params):
     
     return {'loss': -precision_n, 'status': STATUS_OK}
 
+def plot_outliers_pairplot(X, y, y_pred, plot_params=None):
+    """
+    Create a matrix plot for outlier detection results.
+
+    Parameters
+    ----------
+    X : ndarray or DataFrame of shape (n_samples, n_features)
+        The input data.
+
+    y : ndarray or Series of shape (n_samples,)
+        The true labels for the data, where 0 indicates inliers and 1 indicates outliers.
+
+    y_pred : ndarray of shape (n_samples,)
+        The predicted labels from the outlier detection algorithm.
+
+    plot_params : dict, optional
+        Additional keyword arguments for plotting.
+    """
+    if plot_params is None:
+        plot_params = {}
+
+    # Convert to DataFrame for seaborn pairplot
+    if isinstance(X, np.ndarray):
+        X = pd.DataFrame(X)
+    if isinstance(y, np.ndarray):
+        y = pd.Series(y)
+    if isinstance(y_pred, np.ndarray):
+        y_pred = pd.Series(y_pred)
+
+     # Combine X, y, and y_pred into a single DataFrame
+    df = X.copy()
+    df['True Outlier'] = y
+    df['Detected Outlier'] = y_pred
+
+    # Create the pairplot
+    sns.pairplot(df, markers="X", hue='Detected Outlier', diag_kind='kde', palette='coolwarm', plot_kws=plot_params)
+    plt.suptitle("Matrix Plot of Outlier Detection Results", y=1.02)
+    plt.show()
+
+def plot_upper_matrix(X, y, y_pred, plot_params=None):
+    """
+    Create an upper matrix plot for outlier detection results.
+
+    Parameters
+    ----------
+    X : ndarray or DataFrame of shape (n_samples, n_features)
+        The input data.
+
+    y : ndarray or Series of shape (n_samples,)
+        The true labels for the data, where 0 indicates inliers and 1 indicates outliers.
+
+    y_pred : ndarray of shape (n_samples,)
+        The predicted labels from the outlier detection algorithm.
+
+    plot_params : dict, optional
+        Additional keyword arguments for plotting.
+    """
+    if plot_params is None:
+        plot_params = {}
+
+    # Convert to DataFrame for seaborn pairplot
+    if isinstance(X, np.ndarray):
+        X = pd.DataFrame(X)
+    if isinstance(y, np.ndarray):
+        y = pd.Series(y)
+    if isinstance(y_pred, np.ndarray):
+        y_pred = pd.Series(y_pred)
+
+    # Combine X, y, and y_pred into a single DataFrame
+    df = X.copy()
+    df['True Outlier'] = y
+    df['Detected Outlier'] = y_pred
+
+    # Create the pairplot
+    g = sns.pairplot(df, hue='Detected Outlier', diag_kind='kde', palette='coolwarm', plot_kws=plot_params)
+    
+    # Remove the lower triangle by iterating over the axes
+    for i, j in zip(*np.tril_indices_from(g.axes, -1)):
+        g.axes[i, j].set_visible(False)
+    
+    plt.suptitle("Upper Matrix Plot of Outlier Detection Results", y=1.02)
+    plt.show()
+    
