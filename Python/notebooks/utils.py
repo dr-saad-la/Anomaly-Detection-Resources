@@ -15,6 +15,9 @@ from sklearn.utils.validation import column_or_1d
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+from hyperopt import fmin, tpe, hp, Trials, STATUS_OK
+from hyperopt.pyll.base import scope
+
 
 def generate_data(n_samples=1000, n_features=2, n_inliers=900, n_outliers=100, random_state=42):
     """
@@ -347,6 +350,7 @@ def apply_abod_advanced(X, y, contamination=0.1, scale_data=True, scaler_type='s
 
     return results
 
+
 def precision_n_scores(y, y_pred, n=None):
     """
     Utility function to calculate precision @ rank n.
@@ -384,3 +388,123 @@ def precision_n_scores(y, y_pred, n=None):
     y_pred_binary = column_or_1d(y_pred_binary)
 
     return precision_score(y, y_pred_binary)
+
+
+def precision_at_rank_n(y_true, y_scores, n=None):
+    """
+    Calculate precision at rank n for anomaly detection.
+
+    Parameters
+    ----------
+    y_true : ndarray
+        True binary labels for the dataset, where 1 indicates outliers and 0 indicates inliers.
+    
+    y_scores : ndarray
+        Outlier scores for each sample, higher scores indicate higher likelihood of being an outlier.
+    
+    n : int, optional
+        The number of top-ranked samples to consider for calculating precision. If None, it defaults to the number of actual outliers.
+    
+    Returns
+    -------
+    precision : float
+        Precision at rank n.
+    """
+    if n is None:
+        n = int(np.sum(y_true))  # Default to the number of actual outliers
+
+    # Get indices of the top n scores
+    top_n_indices = np.argsort(y_scores)[-n:]
+
+    # Get the labels for the top n scores
+    top_n_labels = y_true[top_n_indices]
+
+    # Calculate precision at rank n
+    precision = np.sum(top_n_labels) / n
+    return precision
+
+
+# Hyperparameter tuning utility functions
+def grid_search_abod(X, y, n_neighbors_options, contamination, n_outliers=None):
+    """
+    Perform grid search to find the best n_neighbors parameter for ABOD based on precision at rank n.
+
+    Parameters
+    ----------
+    X : ndarray of shape (n_samples, n_features)
+        The dataset containing both inliers and outliers.
+
+    y : ndarray of shape (n_samples,)
+        The labels for the dataset, where 0 indicates inliers and 1 indicates outliers.
+
+    n_neighbors_options : list
+        A list of n_neighbors values to search over.
+
+    contamination : float
+        The proportion of outliers in the dataset.
+
+    n_outliers : int, optional
+        The number of top-ranked samples to consider for calculating precision at rank n.
+
+    Returns
+    -------
+    best_n_neighbors : int
+        The best n_neighbors parameter based on precision at rank n.
+    
+    best_precision_n : float
+        The best precision at rank n achieved.
+    """
+    best_n_neighbors = None
+    best_precision_n = 0
+
+    for n_neighbors in n_neighbors_options:
+        # Initialize ABOD model with current n_neighbors
+        abod = ABOD(n_neighbors=n_neighbors, contamination=contamination)
+
+        # Fit the model to the data
+        abod.fit(X)
+
+        # Predict the outlier scores
+        outlier_scores = abod.decision_scores_
+
+        # Calculate precision at rank n
+        precision_n = precision_at_rank_n(y, outlier_scores, n=n_outliers)
+
+        # Update best parameter if current precision is better
+        if precision_n > best_precision_n:
+            best_precision_n = precision_n
+            best_n_neighbors = n_neighbors
+
+    return best_n_neighbors, best_precision_n
+
+
+def hyperopt_objective(params):
+    """
+    Objective function for Hyperopt to optimize the n_neighbors parameter of ABOD.
+
+    Parameters
+    ----------
+    params : dict
+        Dictionary containing the hyperparameter 'n_neighbors'.
+
+    Returns
+    -------
+    dict
+        Dictionary containing the loss (negative precision at rank n) and the status.
+    """
+    n_neighbors = params['n_neighbors']
+    
+    # Initialize ABOD model with current n_neighbors
+    abod = ABOD(n_neighbors=n_neighbors, contamination=contamination)
+
+    # Fit the model to the data
+    abod.fit(X_scaled)
+
+    # Predict the outlier scores
+    outlier_scores = abod.decision_scores_
+
+    # Calculate precision at rank n
+    precision_n = precision_at_rank_n(y, outlier_scores, n=n_outliers)
+    
+    return {'loss': -precision_n, 'status': STATUS_OK}
+
