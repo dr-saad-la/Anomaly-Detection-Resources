@@ -518,7 +518,7 @@ def grid_search_abod(X, y, n_neighbors_options, contamination, n_outliers=None):
     return best_n_neighbors, best_precision_n
 
 
-def hyperopt_objective(params):
+def hyperopt_objective(params, X_scaled, y, n_outliers, contamination):
     """
     Objective function for Hyperopt to optimize the n_neighbors parameter of ABOD.
 
@@ -527,14 +527,26 @@ def hyperopt_objective(params):
     params : dict
         Dictionary containing the hyperparameter 'n_neighbors'.
 
+    X_scaled : ndarray
+        The scaled feature matrix.
+
+    y : ndarray
+        The true labels.
+
+    n_outliers : int
+        The number of true outliers.
+
+    contamination : float
+        The contamination rate (proportion of outliers).
+
     Returns
     -------
     dict
         Dictionary containing the loss (negative precision at rank n) and the status.
     """
     n_neighbors = params['n_neighbors']
-    
-    # Initialize ABOD model with current n_neighbors
+
+    # Initialize ABOD model with current n_neighbors and contamination rate
     abod = ABOD(n_neighbors=n_neighbors, contamination=contamination)
 
     # Fit the model to the data
@@ -544,10 +556,9 @@ def hyperopt_objective(params):
     outlier_scores = abod.decision_scores_
 
     # Calculate precision at rank n
-    precision_n = precision_at_rank_n(y, outlier_scores, n=n_outliers)
-    
-    return {'loss': -precision_n, 'status': STATUS_OK}
+    precision_n = precision_n_scores(y, outlier_scores, n=n_outliers)
 
+    return {'loss': -precision_n, 'status': STATUS_OK}
 
 def plot_outliers_pairplot(X, y, y_pred, plot_params=None):
     """
@@ -587,6 +598,7 @@ def plot_outliers_pairplot(X, y, y_pred, plot_params=None):
     sns.pairplot(df, markers="X", hue='Detected Outlier', diag_kind='kde', palette='coolwarm', plot_kws=plot_params)
     plt.suptitle("Matrix Plot of Outlier Detection Results", y=1.02)
     plt.show()
+
 
 def plot_upper_matrix(X, y, y_pred, plot_params=None):
     """
@@ -631,4 +643,36 @@ def plot_upper_matrix(X, y, y_pred, plot_params=None):
     
     plt.suptitle("Upper Matrix Plot of Outlier Detection Results", y=1.02)
     plt.show()
+
+
+def objective(params):
+    """
+    Objective function for Hyperopt to optimize the n_neighbors parameter of ABOD.
+
+    Parameters
+    ----------
+    params : dict
+        Dictionary containing the hyperparameter 'n_neighbors'.
+
+    Returns
+    -------
+    dict
+        Dictionary containing the loss (negative precision at rank n) and the status.
+    """
+    n_neighbors = params['n_neighbors']
+    
+    # Initialize ABOD model with current n_neighbors
+    abod = ABOD(n_neighbors=n_neighbors, contamination=contamination)
+
+    # Fit the model to the data
+    abod.fit(X_scaled)
+
+    # Predict the outlier scores
+    outlier_scores = abod.decision_scores_
+
+    # Calculate precision at rank n
+    precision_n = precision_at_rank_n(y, outlier_scores, n=n_outliers)
+    
+    return {'loss': -precision_n, 'status': STATUS_OK}
+
     
