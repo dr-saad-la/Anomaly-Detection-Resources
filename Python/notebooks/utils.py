@@ -6,12 +6,14 @@ import numpy as np
 import pandas as pd
 
 from sklearn.datasets import make_blobs
-from sklearn.preprocessing import StandardScaler, MinMaxScaler
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, OneHotEncoder
 from pyod.models.abod import ABOD
 # from pyod.utils import precision_n_scores
 
 from sklearn.metrics import classification_report, roc_auc_score, precision_recall_curve, auc, precision_score
 from sklearn.utils.validation import column_or_1d
+from sklearn.pipeline import Pipeline
+from sklearn.compose import ColumnTransformer
 
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -645,34 +647,79 @@ def plot_upper_matrix(X, y, y_pred, plot_params=None):
     plt.show()
 
 
-def objective(params):
+
+
+def preprocess_pipeline(train_data, test_data, numerical_features, categorical_features):
     """
-    Objective function for Hyperopt to optimize the n_neighbors parameter of ABOD.
+    Preprocess the training and test datasets by applying transformations 
+    to numerical and categorical features.
 
     Parameters
     ----------
-    params : dict
-        Dictionary containing the hyperparameter 'n_neighbors'.
+    train_data : pandas.DataFrame
+        The training dataset containing both numerical and categorical features.
+
+    test_data : pandas.DataFrame
+        The test dataset containing both numerical and categorical features.
+
+    numerical_features : list of str
+        A list of column names representing numerical features in the dataset.
+
+    categorical_features : list of str
+        A list of column names representing categorical features in the dataset.
 
     Returns
     -------
-    dict
-        Dictionary containing the loss (negative precision at rank n) and the status.
+    X_train_preprocessed : numpy.ndarray
+        The preprocessed training data, where numerical features are scaled 
+        and categorical features are one-hot encoded.
+
+    X_test_preprocessed : numpy.ndarray
+        The preprocessed test data, where numerical features are scaled 
+        and categorical features are one-hot encoded.
+
+    Examples
+    --------
+    >>> train_data = pd.DataFrame({
+    ...     'age': [25, 35, 45],
+    ...     'income': [50000, 60000, 80000],
+    ...     'gender': ['male', 'female', 'female']
+    ... })
+    >>> test_data = pd.DataFrame({
+    ...     'age': [30, 40],
+    ...     'income': [55000, 70000],
+    ...     'gender': ['female', 'male']
+    ... })
+    >>> numerical_features = ['age', 'income']
+    >>> categorical_features = ['gender']
+    >>> X_train_preprocessed, X_test_preprocessed = preprocess_pipeline(train_data, test_data, numerical_features, categorical_features)
+    >>> print(X_train_preprocessed)
+    >>> print(X_test_preprocessed)
     """
-    n_neighbors = params['n_neighbors']
     
-    # Initialize ABOD model with current n_neighbors
-    abod = ABOD(n_neighbors=n_neighbors, contamination=contamination)
+    # Preprocessing pipeline for numerical data
+    numerical_pipeline = Pipeline([
+        ('scaler', StandardScaler())
+    ])
 
-    # Fit the model to the data
-    abod.fit(X_scaled)
+    # Preprocessing pipeline for categorical data
+    categorical_pipeline = Pipeline([
+        ('onehot', OneHotEncoder(handle_unknown='ignore'))
+    ])
 
-    # Predict the outlier scores
-    outlier_scores = abod.decision_scores_
+    # Combine preprocessing pipelines
+    preprocessor = ColumnTransformer([
+        ('num', numerical_pipeline, numerical_features),
+        ('cat', categorical_pipeline, categorical_features)
+    ])
 
-    # Calculate precision at rank n
-    precision_n = precision_at_rank_n(y, outlier_scores, n=n_outliers)
-    
-    return {'loss': -precision_n, 'status': STATUS_OK}
+    # Preprocess the data
+    X_train_preprocessed = preprocessor.fit_transform(train_data)
+    X_test_preprocessed = preprocessor.transform(test_data)
+
+    return X_train_preprocessed, X_test_preprocessed
+
+
+
 
     
