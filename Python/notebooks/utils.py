@@ -1,5 +1,5 @@
 """
-    Utility function that will be used in the series of notebooks dedicated to outlier detection algorithms.
+    Utility functions that will be used in the series of notebooks dedicated to outlier detection algorithms.
 """
 
 import numpy as np
@@ -137,6 +137,7 @@ def visualize_data(X, y, title='Synthetic Data for Outlier Detection'):
     plt.grid(True)
     plt.show()
 
+
 def apply_abod(X, y, contamination=0.1):
     """
     Apply the Angle-based Outlier Detector (ABOD) algorithm to the dataset.
@@ -214,6 +215,7 @@ def apply_abod(X, y, contamination=0.1):
     plt.legend()
     plt.grid(True)
     plt.show()
+
 
 def apply_abod_advanced(X, y, contamination=0.1, scale_data=True, scaler_type='standard', plot_scores=True, 
                         plot_outliers=True, n=None, abod_params=None, plot_params=None, plot_features=None, n_cols=None):
@@ -561,6 +563,66 @@ def hyperopt_objective(params, X_scaled, y, n_outliers, contamination):
     precision_n = precision_n_scores(y, outlier_scores, n=n_outliers)
 
     return {'loss': -precision_n, 'status': STATUS_OK}
+
+def plot_outliers_vs_inliers(X, y_pred, main_feature=0, plot_features=None, n_cols=None):
+    """
+    Plot outliers vs inliers, with one main feature plotted against the provided features.
+
+    Parameters
+    ----------
+    X : DataFrame or ndarray
+        Feature matrix.
+    y_pred : ndarray
+        Predicted labels (0 for inliers, 1 for outliers).
+    main_feature : int, optional
+        Index of the main feature to plot against (default is 0).
+    plot_features : list of int, optional
+        List of feature indices to plot against the main feature. If None, defaults to [1].
+    n_cols : int, optional
+        Number of columns for the subplot grid. If None, it will be guessed.
+
+    """
+    if plot_features is None:
+        plot_features = [1]  # Default to plotting against the second feature if none provided
+
+    if len(plot_features) == 1:
+        # If only one feature is provided, plot a single scatter plot
+        plt.figure(figsize=(10, 6))
+        plt.scatter(X.values[y_pred == 0][:, main_feature], X.values[y_pred == 0][:, plot_features[0]], color='blue', label='Inliers', alpha=0.6)
+        plt.scatter(X.values[y_pred == 1][:, main_feature], X.values[y_pred == 1][:, plot_features[0]], color='red', label='Outliers', alpha=0.6)
+        plt.xlabel(f'Feature {main_feature + 1}')
+        plt.ylabel(f'Feature {plot_features[0] + 1}')
+        plt.title('Outliers vs Inliers')
+        plt.legend()
+        plt.grid(True)
+        plt.show()
+    else:
+        # If more than one feature is provided, plot a grid of scatter plots
+        if n_cols is None:
+            n_cols = min(len(plot_features), 3)  # Guess a reasonable number of columns
+
+        n_rows = (len(plot_features) + n_cols - 1) // n_cols  # Calculate the number of rows needed
+        fig, axes = plt.subplots(n_rows, n_cols, figsize=(5 * n_cols, 5 * n_rows))
+
+        if n_rows == 1:
+            axes = np.expand_dims(axes, 0)  # Ensure axes is always 2D for consistency
+
+        for idx, feature in enumerate(plot_features):
+            ax = axes[idx // n_cols, idx % n_cols]
+            ax.scatter(X.values[y_pred == 0][:, main_feature], X.values[y_pred == 0][:, feature], color='blue', label='Inliers', alpha=0.6)
+            ax.scatter(X.values[y_pred == 1][:, main_feature], X.values[y_pred == 1][:, feature], color='red', label='Outliers', alpha=0.6)
+            ax.set_xlabel(f'Feature {main_feature + 1}')
+            ax.set_ylabel(f'Feature {feature + 1}')
+            ax.legend()
+            ax.grid(True)
+
+        # Remove empty subplots
+        for idx in range(len(plot_features), n_rows * n_cols):
+            fig.delaxes(axes.flatten()[idx])
+
+        plt.suptitle("Outliers vs Inliers", y=1.02)
+        plt.tight_layout()
+        plt.show()
 
 def plot_outliers_pairplot(X, y, y_pred, plot_params=None):
     """
