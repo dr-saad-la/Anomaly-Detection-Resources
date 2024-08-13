@@ -1,3 +1,13 @@
+__author__ = "Dr. Saad Laouadi"
+__verssion__ = "1.0.0"
+
+"""
+    Utility functions used to train SUOD System. 
+    The objective of these function is to provide higher API for the system.
+
+"""
+from itertools import product
+
 import dill
 import joblib
 from joblib import Parallel, delayed, parallel_backend
@@ -56,6 +66,7 @@ def generate_sample_data(n_train, n_test, n_features, contamination, random_stat
     )
     return X_train, X_test, y_train, y_test
 
+
 def initialize_detectors(detector_configs):
     """
     Initialize a list of outlier detectors based on provided configurations.
@@ -66,8 +77,8 @@ def initialize_detectors(detector_configs):
         A list of dictionaries where each dictionary specifies the detector type and its parameters.
         Example:
         [
-            {'detector': LOF, 'params': {'n_neighbors': 15}},
-            {'detector': IForest, 'params': {'n_estimators': 100}}
+            {'detector': LOF, 'params': {'n_neighbors': [15, 20, 25, 35]}},
+            {'detector': IForest, 'params': {'n_estimators': [25, 50, 100, 750]}}
         ]
 
     Returns
@@ -76,43 +87,84 @@ def initialize_detectors(detector_configs):
         List of initialized outlier detectors.
     """
     detector_list = []
+
     for config in detector_configs:
         detector_class = config['detector']
-        detector_params = config.get('params', {})
-        detector_instance = detector_class(**detector_params)
-        detector_list.append(detector_instance)
+        param_dict = config.get('params', {})
+
+        # Ensure each parameter value is a list
+        for key, value in param_dict.items():
+            if not isinstance(value, list):
+                param_dict[key] = [value]
+
+        # Generate all combinations of the parameter values
+        param_names = list(param_dict.keys())
+        param_values = list(param_dict.values())
+        param_combinations = list(product(*param_values))
+
+        for combination in param_combinations:
+            detector_params = dict(zip(param_names, combination))
+            detector_instance = detector_class(**detector_params)
+            detector_list.append(detector_instance)
     
     return detector_list
 
 
-def train_suod(X_train, detector_list, n_jobs=2, combination='average', verbose=False):
+def train_suod(X=None, detector_list=None, contamination=0.1, combination='average', n_jobs=2, verbose=False, type='supervised', **kwargs):
     """
     Train the SUOD model.
 
     Parameters
     ----------
-    X_train : ndarray
-        Training data.
+    X : ndarray, optional
+        Input data. Required for all types of training ('supervised', 'unsupervised', or 'semi-supervised').
     detector_list : list
         List of outlier detectors.
-    n_jobs : int, optional
-        Number of parallel jobs to run (default is 4).
+    contamination : float, optional
+        The amount of contamination in the dataset (default is 0.1).
     combination : str, optional
         Method to combine results from base estimators (default is 'average').
+    n_jobs : int, optional
+        Number of parallel jobs to run (default is 2).
     verbose : bool, optional
         Whether to print detailed information (default is False).
+    type : str, optional
+        Type of training: 'supervised' (default), 'unsupervised', or 'semi-supervised'.
+    **kwargs : dict, optional
+        Additional parameters to pass to the SUOD model.
 
     Returns
     -------
     clf : SUOD
         Trained SUOD model.
+    labels : ndarray, optional
+        Predicted labels for unsupervised mode. 1 for outliers, 0 for inliers.
     """
-    clf = SUOD(base_estimators=detector_list,
-               n_jobs=n_jobs,
-               combination=combination,
-               verbose=verbose)
-    clf.fit(X_train)
-    return clf
+    if X is None:
+        raise ValueError("X is required for all types of training.")
+
+    clf = SUOD(
+        base_estimators=detector_list,
+        contamination=contamination,
+        combination=combination,
+        n_jobs=n_jobs,
+        verbose=verbose,
+        **kwargs  # Pass additional parameters here
+    )
+
+    # Fit the model for all types
+    clf.fit(X)
+
+    if type == 'supervised' or type == 'semi-supervised':
+        return clf
+    
+    elif type == 'unsupervised':
+        labels = clf.labels_      # Access the labels_ attribute after fitting
+        return clf, labels
+    
+    else:
+        raise ValueError("Invalid type. Choose 'supervised', 'unsupervised', or 'semi-supervised'.")
+    
 
 def get_predictions(clf, X_train, X_test):
     """
@@ -148,6 +200,41 @@ def get_predictions(clf, X_train, X_test):
 
     return y_train_pred, y_train_scores, y_test_pred, y_test_scores
 
+
+# Check if the dataset has only one class
+def check_class_presence(y_train, y_test):
+    """
+    Check which dataset has only one class.
+
+    Parameters
+    ----------
+    y_train : ndarray
+        True labels for training data.
+    y_test : ndarray
+        True labels for testing data.
+
+    Returns
+    -------
+    bool, bool
+        Two booleans indicating if y_train and y_test have only one class.
+    """
+    train_has_one_class = len(set(y_train)) == 1
+    test_has_one_class = len(set(y_test)) == 1
+
+    if train_has_one_class:
+        print(f"y_train has only one class: {set(y_train)}")
+    else:
+        print(f"y_train has multiple classes: {set(y_train)}")
+
+    if test_has_one_class:
+        print(f"y_test has only one class: {set(y_test)}")
+    else:
+        print(f"y_test has multiple classes: {set(y_test)}")
+
+    return train_has_one_class, test_has_one_class
+
+
+# Evaluate the model and handle cases with only one class
 def evaluate_model(clf_name, y_train, y_train_scores, y_test, y_test_scores):
     """
     Evaluate the model performance.
@@ -165,10 +252,19 @@ def evaluate_model(clf_name, y_train, y_train_scores, y_test, y_test_scores):
     y_test_scores : ndarray
         Outlier scores for testing data.
     """
-    print("\nOn Training Data:")
-    evaluate_print(clf_name, y_train, y_train_scores)
-    print("\nOn Test Data:")
-    evaluate_print(clf_name, y_test, y_test_scores)
+    train_has_one_class, test_has_one_class = check_class_presence(y_train, y_test)
+    
+    if not train_has_one_class:
+        print("\nOn Training Data:")
+        evaluate_print(clf_name, y_train, y_train_scores)
+    else:
+        print("Skipping evaluation on training data due to only one class present.")
+    
+    if not test_has_one_class:
+        print("\nOn Test Data:")
+        evaluate_print(clf_name, y_test, y_test_scores)
+    else:
+        print("Skipping evaluation on test data due to only one class present.")
 
 
 def visualize_results(clf_name, X_train, y_train, X_test, y_test, y_train_pred, y_test_pred):
