@@ -3,8 +3,7 @@ __verssion__ = "1.0.0"
 
 """
     Utility functions used to train SUOD System. 
-    The objective of these function is to provide higher API for the system.
-
+    The objective of these functions is to provide higher API for the system.
 """
 from itertools import product
 
@@ -65,8 +64,7 @@ def generate_sample_data(n_train, n_test, n_features, contamination, random_stat
         random_state=random_state
     )
     return X_train, X_test, y_train, y_test
-
-
+    
 def initialize_detectors(detector_configs):
     """
     Initialize a list of outlier detectors based on provided configurations.
