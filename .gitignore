@@ -166,3 +166,6 @@ datasets/
 
 # Ignore the adbench directory
 ADBench/
+
+# ignore the package
+pyod/
